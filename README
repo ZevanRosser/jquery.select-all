@@ -1,0 +1,1 @@
+jquery.select-all is a different type of javascript templating system
