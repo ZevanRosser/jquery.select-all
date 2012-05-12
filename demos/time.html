@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="../jquery.select-all.js"></script>
+    <script>
+     $(function(){
+       
+       function Time(){
+         this.elem = $("#time").selectAll(this); 
+         var time = new Date();
+         
+         this.hours.text(time.getHours());
+         this.minutes.text(time.getMinutes());
+         this.seconds.text(time.getSeconds());
+       }
+       
+       var Main = (function(){
+         var self = this;
+         self.elem = $("#main").selectAll(self).appendTo("body");
+         self.add.text("add time").click(function(){
+           var time = new Time();
+           time.elem.prependTo(self.times);
+         });
+       })();
+
+
+     });
+    </script>
+    <style>
+    </style>
+  </head>
+  <body>
+    
+    <code id="main" style="display:none">
+      <button>~add</button>
+      <div>~times</div>
+    </code>
+    
+    <code id="time" style="display:none">
+      <span>~hours</span>:<span>~minutes</span>:<span>~seconds</span>
+      <hr/>
+    </code>
+        
+  </body>
+</html>
