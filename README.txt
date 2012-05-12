@@ -1,1 +1,1 @@
-jquery.select-all is a different type of javascript templating system
+jquery.select-all is a different type of javascript templating system. Have a look at the demos to see what it is about.
