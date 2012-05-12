@@ -1,7 +1,5 @@
 (function($) {
-
   var cache = {};
-
   var target;
 
   $.fn.selectAll = function(theTarget) {
@@ -37,8 +35,6 @@
   }
 
   // this is an experimental feature
-
-
   function List(elem) {
     this._elements = [];
     this.parent = elem.parent();
