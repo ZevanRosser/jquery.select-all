@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="../jquery.select-all.js"></script>
+    <script>
+      $(function(){
+        
+        function Note(txt){
+          this.elem = $("#note").selectAll(this); 
+          this.note.text(txt);
+        }
+        $(document).on("click", ".ex", function(){
+          $(this).parent().remove();
+        });
+        
+        var Main = (function(){
+          var self = this;
+          self.elem = $("#main").selectAll(self).appendTo("body");
+          if (localStorage.selectAllNotes){
+            self.notes.html(localStorage.selectAllNotes); 
+          }
+          self.addNote.change(function(){
+            var value = $.trim(self.addNote.val());
+            if (value.length > 0){
+              var note = new Note(value);
+              note.elem.prependTo(self.notes);
+              self.addNote.val("");
+              localStorage.selectAllNotes = self.notes.html();
+            }
+          });
+        })();
+        
+      });
+    </script>
+    <style>
+      body,html{
+        font-family : sans-serif; 
+      }
+      .note{
+        margin : 5px;
+        padding : 5px;
+        border : 1px solid #ccc; 
+      }
+      .ex{
+        float : right; 
+      }
+    </style>
+  </head>
+  <body>
+    
+    <code id="main" style="display:none">
+      <h3>Notes</h3>
+      <input type="text" data-var="addNote" placeholder="enter a note"/>
+      <div>~notes</div>
+    </code>
+    
+    <code id="note" style="display:none">
+      <div class="note">
+        <span>~note</span><button class="ex" data-var="ex">X</button>
+      </div>
+    </code>
+    
+  </body>
+</html>
