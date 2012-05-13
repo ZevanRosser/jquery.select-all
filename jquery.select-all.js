@@ -4,15 +4,16 @@
 
   $.fn.selectAll = function(theTarget) {
     var elem;
+    var key = this.selector;
     target = theTarget;
-    if (cache[target]) {
-      elem = cache[target].clone();
+    if (cache[key]) {
+      elem = cache[key].clone();
     } else {
       elem = $("<div class='select-all'>" + this.html() + "<\/div>");
       if (elem.children().length == 1) {
         elem = $(elem.html());
       }
-      cache[target] = elem.clone();
+      cache[key] = elem.clone();
     }
     elem.each(populate);
     elem.find("*").each(populate);
