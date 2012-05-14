@@ -8,30 +8,36 @@
     <script>
       $(function(){
         
-        function Note(txt){
-          this.elem = $("#note").selectAll(this); 
-          this.note.text(txt);
-        }
-        $(document).on("click", ".ex", function(){
-          $(this).parent().remove();
-        });
-        
-        var Main = (function(){
+        var Notes = function(){
           var self = this;
           self.elem = $("#main").selectAll(self).appendTo("body");
           if (localStorage.selectAllNotes){
             self.notes.html(localStorage.selectAllNotes); 
           }
+          self.save = function(){
+            localStorage.selectAllNotes = self.notes.html();
+          };
           self.addNote.change(function(){
             var value = $.trim(self.addNote.val());
             if (value.length > 0){
               var note = new Note(value);
               note.elem.prependTo(self.notes);
               self.addNote.val("");
-              localStorage.selectAllNotes = self.notes.html();
+              self.save();
             }
           });
-        })();
+        };
+        
+        var notes = new Notes();
+        
+        function Note(txt){
+          this.elem = $("#note").selectAll(this); 
+          this.note.text(txt);
+        }
+        $(document).on("click", ".ex", function(){
+          $(this).parent().remove();
+          notes.save();
+        });
         
       });
     </script>
