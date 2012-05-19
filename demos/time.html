@@ -6,40 +6,44 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="../jquery.select-all.js"></script>
     <script>
-     $(function(){
-       
-       function Time(){
-         this.elem = $("#time").selectAll(this); 
-         var time = new Date();
-         
-         this.hours.text(time.getHours());
-         this.minutes.text(time.getMinutes());
-         this.seconds.text(time.getSeconds());
-       }
-       
-       var Main = (function(){
-         var self = this;
-         self.elem = $("#main").selectAll(self).appendTo("body");
-         self.add.text("add time").click(function(){
-           var time = new Time();
-           time.elem.prependTo(self.times);
-         });
-       })();
-
-     });
+      $(function(){
+        
+        function Time(){
+          this.elem = $("#time").selectAll(this); 
+          var time = new Date();
+          
+          this.hours.text(time.getHours());
+          this.minutes.text(time.getMinutes());
+          this.seconds.text(time.getSeconds());
+        }
+        
+        var TimeDemo = function(){
+          var self = this;
+          self.elem = $("#main").selectAll(self).appendTo("body");
+          self.add.text("add time").click(function(){
+            var time = new Time();
+            time.elem.prependTo(self.times);
+          });
+        };
+        
+        var timeDemo = new TimeDemo();
+        
+        
+      });
     </script>
   </head>
   <body>
     
-    <code id="main" style="display:none">
+    <script id="main" type="text/html">
       <button>~add</button>
       <div>~times</div>
-    </code>
+    </script>
     
-    <code id="time" style="display:none">
+    <script id="time" type="text/html">
       <span>~hours</span>:<span>~minutes</span>:<span>~seconds</span>
       <hr/>
-    </code>
-        
+    </script>
+    
+    
   </body>
 </html>
