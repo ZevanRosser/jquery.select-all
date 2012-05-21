@@ -1,10 +1,8 @@
 (function($) {
   var cache = {};
   var target;
-  // speed up caching?
   $.fn.selectAll = function(theTarget, params) {
-    // maybe add caching?
-     var elem;
+    var elem;
     if (theTarget == "static") {
       var html = this.html();
       for (var i in params){
