@@ -8,6 +8,7 @@
     <script>
       $(function(){
         
+        var noteTemplate = $("#note");
         var Notes = function(){
           var self = this;
           self.elem = $("#main").selectAll(self).appendTo("body");
@@ -20,8 +21,10 @@
           self.addNote.change(function(){
             var value = $.trim(self.addNote.val());
             if (value.length > 0){
-              var note = new Note(value);
-              note.elem.prependTo(self.notes);
+              var note = noteTemplate.selectAll("static", {
+                note : value
+              });
+              note.prependTo(self.notes);
               self.addNote.val("");
               self.save();
             }
@@ -30,10 +33,6 @@
         
         var notes = new Notes();
         
-        function Note(txt){
-          this.elem = $("#note").selectAll(this); 
-          this.note.text(txt);
-        }
         $(document).on("click", ".ex", function(){
           $(this).parent().remove();
           notes.save();

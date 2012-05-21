@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="../jquery.select-all.js"></script>
+    <script>
+      $(function(){
+        
+        var tweet = $("#tweet"),
+            tweets = $("#tweets"),
+            search = $("#search").change(function(){
+              var q = $.trim(search.val());
+              tweets.html("loading...");
+              
+              $.ajax({
+                url: "http://search.twitter.com/search.json?q=" + q,
+                dataType: "jsonp",
+                success: function(data) {
+                  search.val("");
+                  tweets.html("search results for <b>'" + q + "'</b><br/>");
+                  var leng = data.results.length;
+                  if (leng == 0) html = "no results for <b>'" + q + "'</b><br/>";
+                  for (var i = 0; i <leng; i++){
+                    var result = data.results[i];
+                    tweet.selectAll("static", result).appendTo(tweets);
+                  }
+                }
+              });
+              
+            });
+        
+      });
+    </script>
+    <style>
+      
+      body,html{
+        font-family : sans-serif;
+        font-size : 13px; 
+      }
+      
+      .tweet{
+        position : relative;
+        margin : 5px;
+        padding : 5px;
+        border : 1px solid gray; 
+        overflow : hidden;
+      }
+      
+      .tweet img{
+        float : left; 
+        margin-right : 5px;
+      }
+      
+      #tweets{
+        margin-top : 10px; 
+      }
+    </style>
+  </head>
+  <body>
+    
+    <h2>Search Twitter</h2>
+    <input type="search" id="search" placeholder="search..."/>
+    <div id="tweets"></div>
+    
+    <script id="tweet" type="text/html">
+      <div class="wrapper">
+        <div class="tweet">
+          <h3>~from_user</h3>
+          <img src="~profile_image_url"/>
+          <p>~text</p>
+        </div>
+      </div>
+    </script>
+    
+  </body>
+</html>

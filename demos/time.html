@@ -9,12 +9,17 @@
       $(function(){
         
         function Time(){
-          this.elem = $("#time").selectAll(this); 
-          var time = new Date();
-          
-          this.hours.text(time.getHours());
-          this.minutes.text(time.getMinutes());
-          this.seconds.text(time.getSeconds());
+          this.elem = $("#time").selectAll(this) 
+          .css({
+            fontFamily : "sans-serif",
+            fontSize : Math.random() * 30 + 5
+          });
+          setInterval($.proxy(function(){
+            var time = new Date();
+            this.hours.text(time.getHours());
+            this.minutes.text(time.getMinutes());
+            this.seconds.text(time.getSeconds());
+          }, this));
         }
         
         var TimeDemo = function(){
