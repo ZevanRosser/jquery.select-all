@@ -1,22 +1,33 @@
 (function($) {
   var cache = {};
   var target;
-
-  $.fn.selectAll = function(theTarget) {
-    var elem;
-    var key = this.selector;
-    target = theTarget;
-    if (cache[key]) {
-      elem = cache[key].clone();
-    } else {
-      elem = $("<div class='select-all'>" + this.html() + "<\/div>");
-      if (elem.children().length == 1) {
-        elem = $(elem.html());
+  // speed up caching?
+  $.fn.selectAll = function(theTarget, params) {
+    // maybe add caching?
+     var elem;
+    if (theTarget == "static") {
+      var html = this.html();
+      for (var i in params){
+        html = html.replace("~"+i, params[i]);
       }
-      cache[key] = elem.clone();
+      elem = $(html);
+    } else {
+     
+      var key = this.selector;
+      target = theTarget;
+      if (cache[key]) {
+        elem = cache[key].clone();
+      } else {
+        elem = $("<div class='select-all'>" + this.html() + "<\/div>");
+        if (elem.children().length == 1) {
+          elem = $(elem.html());
+        }
+        cache[key] = elem.clone();
+      }
+      elem.each(populate);
+      elem.find("*").each(populate);
+      return elem;
     }
-    elem.each(populate);
-    elem.find("*").each(populate);
     return elem;
   };
 
@@ -32,17 +43,19 @@
       curr.text("");
     } else if (curr.attr("data-var")) {
       target[curr.attr("data-var")] = curr;
-    } 
+    }
   }
 
   // this is an experimental feature
+
+
   function List(elem) {
     this._elements = [];
     this.parent = elem.parent();
     this.elem = elem.clone();
     elem.remove();
-  };
-  
+  }
+
   List.prototype = {
     constructor: List,
     get: function(index) {
