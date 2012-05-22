@@ -10,7 +10,6 @@
       }
       elem = $(html);
     } else {
-     
       var key = this.selector;
       target = theTarget;
       if (cache[key]) {
@@ -24,6 +23,14 @@
       }
       elem.each(populate);
       elem.find("*").each(populate);
+      if (params){
+        for (var i in params){
+          var el = target[i];
+          if (el){
+            el.html(params[i]); 
+          }
+        } 
+      }
       return elem;
     }
     return elem;
@@ -45,8 +52,6 @@
   }
 
   // this is an experimental feature
-
-
   function List(elem) {
     this._elements = [];
     this.parent = elem.parent();
