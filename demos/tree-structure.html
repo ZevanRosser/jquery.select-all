@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="../jquery.select-all.js"></script>
+    <script>
+      $(function(){
+        
+        function TreeStructure(){
+          this.elem = $("#tree-structure").selectAll(this).appendTo("body");
+          var root = new TreeElement();
+          root.elem.appendTo(this.tree);
+          root.txt.attr("placeholder", "root");
+          root.ex.hide();
+        }
+        
+        function TreeElement(){
+          this.elem = $("#tree-element").selectAll(this);
+          this.addForm.submit($.proxy(this.addElement, this));
+          this.ex.click($.proxy(this.remove, this));
+        }
+        TreeElement.prototype.remove = function(){
+          this.elem.remove();
+        };
+        TreeElement.prototype.addElement = function(e){
+          e.preventDefault();
+          var treeElement = new TreeElement();
+          this.children.append(treeElement.elem);
+          treeElement.txt.focus();
+        };
+        
+        var treeStructure = new TreeStructure();
+        
+        
+      });
+    </script>
+    <style>
+      body,html{
+        font-family : sans-serif;
+        font-size : 13px;
+        background-color : #efefef;
+      }
+      div{
+        position : relative; 
+        overflow :hidden;
+      }
+      .bullet{
+        font-size : 20px; 
+      }
+      .title{
+        font-weight : bold;
+        font-size : 40px; 
+        color : #45617d;
+      }
+      .tree{
+        margin-top : 30px; 
+      }
+      .children{
+        margin-left : 30px; 
+      }
+      button, form{
+        float : left; 
+      }
+      button, input[type=submit], input[type=text]{
+        border:1px solid #ccc;
+        border-radius : 2px; 
+        background-color : white;
+        padding : 4px;
+        box-shadow : 0px 0px 2px #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <script id="tree-structure" type="text/html">
+      <span class="title">Tree Structure</span><br/>
+      <div class="tree">~tree</div>
+    </script>
+    
+    <script id="tree-element" type="text/html">
+      <div>
+        <form data-var="addForm">
+          <input type="text" data-var="txt" />
+          <input type="submit" data-var="add" value="&#9660" />
+        </form>
+        <button data-var="ex">x</button>
+      </div>
+      
+      <div class="children">~children</div>
+    </script>
+    
+  </body>
+</html>
