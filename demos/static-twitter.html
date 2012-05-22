@@ -24,7 +24,6 @@
                   if (leng == 0) html = "no results for <b>'" + q + "'</b><br/>";
                   for (var i = 0; i <leng; i++){
                     var result = data.results[i];
-                    console.log(result);
                     tweet.selectAll("static", result).appendTo(tweets);
                   }
                 }
