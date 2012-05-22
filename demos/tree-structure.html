@@ -10,17 +10,31 @@
         
         function TreeStructure(){
           this.elem = $("#tree-structure").selectAll(this).appendTo("body");
+          this.toggle.text("non-editable").toggle(function(){
+            $(".non-editable").show();
+            $(".editable").hide();
+            $(this).text("editable");
+          }, function(){
+            $(".non-editable").hide();
+            $(".editable").show();
+            $(this).text("non-editable");
+          });
           var root = new TreeElement();
           root.elem.appendTo(this.tree);
-          root.txt.attr("placeholder", "root");
+          root.value.attr("placeholder", "root");
           root.ex.hide();
         }
         
         function TreeElement(){
           this.elem = $("#tree-element").selectAll(this);
+          this.nonEditable.hide();
           this.addForm.submit($.proxy(this.addElement, this));
           this.ex.click($.proxy(this.remove, this));
+          this.value.change($.proxy(this.change, this));
         }
+        TreeElement.prototype.change = function(){
+          this.txt.text(this.value.val());
+        };
         TreeElement.prototype.remove = function(){
           this.elem.remove();
         };
@@ -28,7 +42,7 @@
           e.preventDefault();
           var treeElement = new TreeElement();
           this.children.append(treeElement.elem);
-          treeElement.txt.focus();
+          treeElement.value.focus();
         };
         
         var treeStructure = new TreeStructure();
@@ -54,11 +68,11 @@
         font-size : 40px; 
         color : #45617d;
       }
-      .tree{
+      #tree{
         margin-top : 30px; 
       }
       .children{
-        margin-left : 30px; 
+        margin-left : 10px; 
       }
       button, form{
         float : left; 
@@ -76,18 +90,21 @@
     
     <script id="tree-structure" type="text/html">
       <span class="title">Tree Structure</span><br/>
-      <div class="tree">~tree</div>
+      <button>~toggle</button>
+      <div id="tree">~tree</div>
     </script>
     
     <script id="tree-element" type="text/html">
-      <div>
+      <div class="editable">
         <form data-var="addForm">
-          <input type="text" data-var="txt" />
+          <input type="text" data-var="value" />
           <input type="submit" data-var="add" value="&#9660" />
         </form>
         <button data-var="ex">x</button>
       </div>
-      
+      <div class="non-editable" data-var="nonEditable">
+        - <span>~txt</span>
+      </div>
       <div class="children">~children</div>
     </script>
     
