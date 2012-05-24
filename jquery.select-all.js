@@ -26,6 +26,9 @@
       if (params) {
         for (var i in params) {
           var el = target[i];
+          if (el instanceof List){
+            el.fromArray(params[i]);
+          }else
           if (el) {
             el.html(params[i]);
           }
@@ -65,6 +68,12 @@
     get: function(index) {
       return this._elements[index];
     },
+    last : function(){
+      return this.get(this._elements.length - 1);
+    },
+    first : function(){
+      return this.get(0);
+    },
     set: function(index, value) {
       this._elements[index].text(value);
       return this;
@@ -81,6 +90,13 @@
       elem.html(value);
       this.parent.prepend(elem);
       this._elements.unshift(elem);
+      return this;
+    },
+    fromArray : function(values){
+      var leng = values.length;
+      for (var i = 0; i < leng; i++){
+        this.append(values[i]); 
+      }
       return this;
     },
     deleteAt: function(index) {
